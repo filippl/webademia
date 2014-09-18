@@ -1,0 +1,151 @@
+<?php
+/**
+ * @file
+ * Implements transferuj.pl Payments in Drupal Commerce checkout.
+ */
+
+function commerce_transferuj_pl_menu() {
+  $items['commerce_transferuj_pl/verify'] = array(
+    'title' => 'Callback transaction',
+    'page callback' => 'commerce_transferuj_pl_verify',
+    'page arguments' => array(),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'commerce_transferuj_pl.inc',
+    'file path' => drupal_get_path('module', 'commerce_transferuj_pl') . '/includes',
+  );
+
+  return $items;
+}
+
+function commerce_transferuj_pl_commerce_payment_method_info() {
+  $payment_methods = array();
+
+  $payment_methods['transferuj_pl'] = array(
+    'base' => 'commerce_transferuj_pl',
+    'title' => t('Transferuj.pl'),
+    'short_title' => t('Transferuj.pl'),
+    'description' => t('Płatność z Transferuj.pl'),
+    'terminal' => FALSE,
+    'offsite' => TRUE,
+  );
+
+  return $payment_methods;
+}
+
+function commerce_transferuj_pl_settings_form($settings = NULL) {
+  $form = array();
+
+  $settings = (array) $settings + array(
+    'sid' => 0,
+    'cod' => '',
+    'ip' => '195.149.229.109'
+  );
+
+  $form['sid'] = array(
+    '#title' => t('ID sprzedawcy'),
+    '#type' => 'textfield',
+    '#default_value' => $settings['sid'],
+    '#description' => t('Required when stating new transaction variables.'),
+    '#required' => TRUE,
+  );
+
+  $form['cod'] = array(
+    '#title' => t('Kod potwierdzający'),
+    '#type' => 'textfield',
+    '#default_value' => $settings['cod'],
+    '#description' => t('Taki sam jak w panelu sprzedawcy (Ustawienia->Kod potwierdzający).'),
+  );
+  $form['ip'] = array(
+    '#title' => t('IP serwera'),
+    '#type' => 'textfield',
+    '#default_value' => $settings['ip'],
+    '#description' => t('Adres IP serwera, z którego będą przychodzić powiadomienia.'),
+  );
+
+  return $form;
+}
+
+function commerce_transferuj_pl_submit_form($payment_method, $pane_values, $checkout_pane, $order) {
+  if (empty($payment_method['settings']['sid']) ||
+      empty($payment_method['settings']['ip']) ) {
+    drupal_set_message(t('transferuj.pl is not configured for use.'), 'error');
+  }
+
+  $form = array();
+
+  if (!empty($order->data['commerce_payment_transferuj_pl'])) {
+    $pane_values += $order->data['commerce_payment_transferuj_pl'];
+  }
+
+  return $form;
+}
+
+function commerce_transferuj_pl_redirect_form($form, &$form_state, $order, $payment_method) {
+  if (empty($payment_method['settings']['sid']) ||
+      empty($payment_method['settings']['ip']) ) {
+    drupal_set_message(t('transferuj.pl is not configured for use.'), 'error');
+  }
+
+  $wrapper = entity_metadata_wrapper('commerce_order', $order);
+
+  $currency_code = $wrapper->commerce_order_total->currency_code->value();
+  $amount = $wrapper->commerce_order_total->amount->value();
+
+
+  $ts = time();
+  $url_fail = "checkout/" . $order->order_id . "/payment/back/" . $order->data['payment_redirect_key'];
+  $url_ok = "checkout/" . $order->order_id . "/payment/return/" . $order->data['payment_redirect_key'];
+
+  $data = array(
+    'id'           => $payment_method['settings']['sid'],
+    'crc'          => $order->order_id . ':' . $order->data['payment_redirect_key'],
+    'kwota'        => $amount/100,
+    'opis'         => t('Zamówienie @order_number w @store', array('@order_number' => $order->order_number, '@store' => variable_get('site_name', url('<front>', array('absolute' => TRUE))))),
+    'imie'         => '',
+    'nazwisko'     => '',
+    'ulica'        => '',
+    'miasto'       => '',
+    'kod'          => '',
+    'kraj'         => '',
+    'email'        => $order->mail,
+    'telefon'      => '',
+    'pow_url'      => url($url_ok, array('absolute' => TRUE)),
+    'pow_url_blad' => url($url_fail, array('absolute' => TRUE)),
+    'wyn_url'      => url('commerce_transferuj_pl/verify', array('absolute' => TRUE))
+  );
+
+  $params_map = array(
+    'nazwisko' => 'name_line',
+    'ulica' => 'thoroughfare',
+    'miasto' => 'locality',
+    'kod' => 'postal_code',
+    'kraj' => 'country',
+  );
+
+  foreach ($params_map as $key => $value) {
+    if (isset($wrapper->commerce_customer_billing->commerce_customer_address->$value)) {
+      $data[$key] = $wrapper->commerce_customer_billing->commerce_customer_address->$value->value();
+    }
+    else {
+    }
+  }
+
+  $data['md5sum'] = md5($payment_method['settings']['sid'] . $amount/100 . $order->order_id . ':' . $order->data['payment_redirect_key'] . $payment_method['settings']['cod']);
+
+  $form['#action'] = 'https://secure.transferuj.pl';
+
+  foreach ($data as $name => $value) {
+    if (!empty($value)) {
+      $form[$name] = array('#type' => 'hidden', '#value' => $value);
+    }
+  }
+  //drupal_set_message('<pre>'.print_r($data, 1).'<pre>');
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Zapłać przez Transferuj.pl'),
+  );
+
+  return $form;
+}

@@ -1,0 +1,176 @@
+name = DropSell Basic
+description = Profil z podstawowymi modułami
+core = 7.x
+
+; ----------
+; Zależności
+; ----------
+; Administration
+dependencies[] = admin_menu
+dependencies[] = admin_menu_toolbar
+dependencies[] = module_filter
+; Chaos tool suite
+dependencies[] = ctools
+; Core
+dependencies[] = block
+dependencies[] = color
+dependencies[] = comment
+dependencies[] = contextual
+dependencies[] = dashboard
+dependencies[] = dblog
+dependencies[] = field
+dependencies[] = field_sql_storage
+dependencies[] = field_ui
+dependencies[] = file
+dependencies[] = filter
+dependencies[] = help
+dependencies[] = image
+dependencies[] = list
+dependencies[] = locale
+dependencies[] = menu
+dependencies[] = node
+dependencies[] = number
+dependencies[] = options
+dependencies[] = overlay
+dependencies[] = path
+dependencies[] = rdf
+dependencies[] = search
+dependencies[] = shortcut
+dependencies[] = system
+dependencies[] = taxonomy
+dependencies[] = text
+dependencies[] = update
+dependencies[] = user
+; Media
+dependencies[] = imce
+; Multilingual
+dependencies[] = l10n_update
+; Other
+dependencies[] = libraries
+dependencies[] = pathauto
+dependencies[] = strongarm
+dependencies[] = token
+; Path management
+dependencies[] = globalredirect
+; User interface
+dependencies[] = imce_wysiwyg
+dependencies[] = wysiwyg
+; Views
+dependencies[] = views
+dependencies[] = views_ui
+; XML sitemap
+dependencies[] = xmlsitemap
+dependencies[] = xmlsitemap_custom
+dependencies[] = xmlsitemap_menu
+dependencies[] = xmlsitemap_node
+dependencies[] = xmlsitemap_taxonomy
+; Features
+dependencies[] = features
+
+; ----------
+; Zmienne
+; ----------
+variables[admin_theme] = 'seven'
+variables[date_default_timezone] = 'Europe/Warsaw'
+variables[filter_fallback_format] = 'plain_text'
+variables[imce_profiles][1][name] = 'User-1'
+variables[imce_profiles][1][usertab] = 1
+variables[imce_profiles][1][filesize] = 0
+variables[imce_profiles][1][quota] = 0
+variables[imce_profiles][1][tuquota] = 0
+variables[imce_profiles][1][extensions] = '*'
+variables[imce_profiles][1][dimensions] = '1200x1200'
+variables[imce_profiles][1][filenum] = 0
+variables[imce_profiles][1][directories][0][name] = '.'
+variables[imce_profiles][1][directories][0][subnav] = 1
+variables[imce_profiles][1][directories][0][browse] = 1
+variables[imce_profiles][1][directories][0][upload] = 1
+variables[imce_profiles][1][directories][0][thumb] = 1
+variables[imce_profiles][1][directories][0][delete] = 1
+variables[imce_profiles][1][directories][0][resize] = 1
+variables[imce_profiles][1][thumbnails][0][name] = 'Small'
+variables[imce_profiles][1][thumbnails][0][dimensions] = '90x90'
+variables[imce_profiles][1][thumbnails][0][prefix] = 'small_'
+variables[imce_profiles][1][thumbnails][0][suffix] = ''
+variables[imce_profiles][1][thumbnails][1][name] = 'Medium'
+variables[imce_profiles][1][thumbnails][1][dimensions] = '120x120'
+variables[imce_profiles][1][thumbnails][1][prefix] = 'medium_'
+variables[imce_profiles][1][thumbnails][1][suffix] = ''
+variables[imce_profiles][1][thumbnails][2][name] = 'Large'
+variables[imce_profiles][1][thumbnails][2][dimensions] = '180x180'
+variables[imce_profiles][1][thumbnails][2][prefix] = 'large_'
+variables[imce_profiles][1][thumbnails][2][suffix] = ''
+variables[imce_profiles][2][name] = 'Sample profile'
+variables[imce_profiles][2][usertab] = 1
+variables[imce_profiles][2][filesize] = 1
+variables[imce_profiles][2][quota] = 2
+variables[imce_profiles][2][tuquota] = 0
+variables[imce_profiles][2][extensions] = 'gif png jpg jpeg'
+variables[imce_profiles][2][dimensions] = '800x600'
+variables[imce_profiles][2][filenum] = 1
+variables[imce_profiles][2][directories][0][name] = 'u%uid'
+variables[imce_profiles][2][directories][0][subnav] = 0
+variables[imce_profiles][2][directories][0][browse] = 1
+variables[imce_profiles][2][directories][0][upload] = 1
+variables[imce_profiles][2][directories][0][thumb] = 1
+variables[imce_profiles][2][directories][0][delete] = 0
+variables[imce_profiles][2][directories][0][resize] = 0
+variables[imce_profiles][2][thumbnails][0][name] = 'Thumb'
+variables[imce_profiles][2][thumbnails][0][dimensions] = '90x90'
+variables[imce_profiles][2][thumbnails][0][prefix] = 'thumb_'
+variables[imce_profiles][2][thumbnails][0][suffix] = ''
+variables[javascript_parsed][0] = 'misc/drupal.js'
+variables[javascript_parsed][1] = 'misc/jquery.js'
+variables[javascript_parsed][2] = 'misc/jquery.once.js'
+variables[javascript_parsed][3] = 'modules/overlay/overlay-child.js'
+variables[javascript_parsed][4] = 'misc/progress.js'
+variables[javascript_parsed][5] = 'misc/batch.js'
+variables[javascript_parsed][6] = 'sites/all/modules/ctools/js/dropbutton.js'
+variables[javascript_parsed][7] = 'misc/jquery.cookie.js'
+variables[javascript_parsed][8] = 'sites/all/modules/module_filter/js/module_filter.js'
+variables[javascript_parsed][9] = 'sites/all/modules/module_filter/js/modules.js'
+variables[javascript_parsed][10] = 'misc/jquery.ba-bbq.js'
+variables[javascript_parsed][11] = 'sites/all/modules/module_filter/js/module_filter_tab.js'
+variables[javascript_parsed][12] = 'sites/all/modules/module_filter/js/dynamic_position.js'
+variables[javascript_parsed][13] = 'misc/tableheader.js'
+variables[javascript_parsed][14] = 'sites/all/themes/corporateclean/js/jquery.cycle.all.js'
+variables[javascript_parsed][15] = 'misc/ui/jquery.ui.core.min.js'
+variables[javascript_parsed][16] = 'modules/overlay/overlay-parent.js'
+variables[javascript_parsed][17] = 'modules/contextual/contextual.js'
+variables[javascript_parsed][18] = 'sites/all/modules/admin_menu/admin_menu.js'
+variables[javascript_parsed][19] = 'sites/all/modules/admin_menu/admin_menu_toolbar/admin_menu_toolbar.js'
+variables[javascript_parsed][20] = 'sites/all/modules/profiler_builder/js/profiler_builder.js'
+variables[javascript_parsed][21] = 'misc/states.js'
+variables[javascript_parsed][22] = 'misc/form.js'
+variables[language_count] = 2
+variables[language_negotiation_language_content][locale-interface][callbacks][language] = 'locale_language_from_interface'
+variables[language_negotiation_language_content][locale-interface][file] = 'includes/locale.inc'
+variables[language_negotiation_language_url][locale-url][callbacks][language] = 'locale_language_from_url'
+variables[language_negotiation_language_url][locale-url][callbacks][switcher] = 'locale_language_switcher_url'
+variables[language_negotiation_language_url][locale-url][callbacks][url_rewrite] = 'locale_language_url_rewrite_url'
+variables[language_negotiation_language_url][locale-url][file] = 'includes/locale.inc'
+variables[language_negotiation_language_url][locale-url-fallback][callbacks][language] = 'locale_language_url_fallback'
+variables[language_negotiation_language_url][locale-url-fallback][file] = 'includes/locale.inc'
+variables[language_types][language] = true
+variables[language_types][language_content] = false
+variables[language_types][language_url] = false
+variables[module_filter_recent_modules][xmlsitemap_menu] = 1396287505
+variables[module_filter_recent_modules][xmlsitemap_taxonomy] = 1396287505
+variables[module_filter_recent_modules][profiler_builder] = 1396289429
+variables[node_admin_theme] = '1'
+variables[node_options_page][0] = 'status'
+variables[pathauto_blog_pattern] = 'blogs/[user:name]'
+variables[pathauto_forum_pattern] = '[term:vocabulary]/[term:name]'
+variables[pathauto_node_pattern] = 'content/[node:title]'
+variables[pathauto_punctuation_hyphen] = 1
+variables[pathauto_taxonomy_term_pattern] = '[term:vocabulary]/[term:name]'
+variables[pathauto_user_pattern] = 'users/[user:name]'
+variables[theme_default] = 'corporateclean'
+variables[user_pictures] = '1'
+variables[user_picture_dimensions] = '1024x1024'
+variables[user_picture_file_size] = '800'
+variables[user_picture_style] = 'thumbnail'
+variables[user_register] = 2
+variables[xmlsitemap_generated_last] = 1396287513
+
+
